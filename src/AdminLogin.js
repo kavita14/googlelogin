@@ -4,6 +4,8 @@ import './App.css';
 import axios from 'axios';
 import Header from './Header';
 import AdminProfile from './AdminProfile';
+import 'sweetalert/dist/sweetalert.css';
+import SweetAlert from 'sweetalert-react';
 
 class AdminLogin extends Component {
   constructor(props){
@@ -38,11 +40,26 @@ class AdminLogin extends Component {
 
         });
     }
+    else {
+      self.setState({
+        isActive: true,
+        loader:false,
+        title:'Error!',
+        text:"Incorrect Credentials!"
+      });
+    }
 
   }
   render() {
     return (
       <div id="user"><Header />
+      <SweetAlert
+        show={this.state.isActive}
+        title={this.state.title}
+        text={this.state.text}
+        onConfirm={() => this.setState({ isActive: false })}
+      />
+      {(this.state.loader) && <div className="loading style-2"><div className="loading-wheel"></div></div>}
     {(!this.state.loginSuccess) &&   <div className="wrapper">
     <form className="form-signin">
       <h2 className="form-signin-heading">Admin login</h2>

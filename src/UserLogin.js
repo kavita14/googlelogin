@@ -18,6 +18,16 @@ class UserLogin extends Component {
       blockError:false,
       loader:false,
     }
+
+  }
+  componentDidMount() {
+    let profile = sessionStorage.getItem('user');
+    console.log("inside did mount");
+    if(profile) {
+      console.log("profile===",profile);
+      this.setState({loginSuccess:true});
+      this.setState({profileData:JSON.parse(profile),loginSuccess:true});
+    }
   }
   responseGoogle = (response) => {
     console.log("response",response);
@@ -37,6 +47,7 @@ class UserLogin extends Component {
        if(profileData.status === 'Active') {
          self.setState({loader:false})
        self.setState({profileData:profileData,loginSuccess:true});
+       sessionStorage.setItem('user', JSON.stringify(profileData));
      }
      else {
        self.setState({
@@ -88,7 +99,7 @@ class UserLogin extends Component {
                 onConfirm={() => this.setState({ isActive: false })}
               />
               {(this.state.loader) && <div className="loading style-2"><div className="loading-wheel"></div></div>}
-      {(this.state.loginSuccess) && <div style={{marginTop:'50px',marginLeft:'35%'}}><GoogleLogin
+      {(!this.state.loginSuccess) && <div style={{marginTop:'50px',marginLeft:'35%'}}><GoogleLogin
         clientId="175202188663-j1r8casnbfb6vhgjq4uim0iknn2o5aub.apps.googleusercontent.com"
         buttonText="Login With Google+"
         onSuccess={this.responseGoogle.bind(this)}
