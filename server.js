@@ -17,14 +17,6 @@ const pg = require('pg');
 //   console.log("Connected!");
 // });
 
-const config = {
-    host: 'ec2-174-129-236-147.compute-1.amazonaws.com',
-    user: 'hboqxxybclwxds',
-    password: 'cc8c194ef44da7690155bb24bb809c91fa756fc71bc351156397b77a8c71af27',
-    database: 'dadcg8tiaucmg8',
-    port: 5432,
-    ssl:true,
-};
 const client = new pg.Client(config);
 client.connect(err => {
     if (err) throw err;
